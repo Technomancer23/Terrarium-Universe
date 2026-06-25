@@ -1985,77 +1985,57 @@ body > * {
     font-size: 11px;
   }
 }
-/* ===== Make decorative ring stay behind text on mobile ===== */
+/* ===== FIX: mobile band red ring behind text ===== */
 @media (max-width: 768px) {
-  .card,
-  .tile,
-  .large,
-  .accent {
+  .band {
     position: relative !important;
-    overflow: hidden !important;
     isolation: isolate !important;
+    overflow: hidden !important;
   }
 
-  /* 如果红色圆环是伪元素做的 */
-  .card::before,
-  .card::after,
-  .tile::before,
-  .tile::after,
-  .large::before,
-  .large::after,
-  .accent::before,
-  .accent::after {
+  .band::after {
     z-index: 0 !important;
     pointer-events: none !important;
+
+    /* 手机端稍微收一下，不然像红色呼啦圈撞网页 */
+    width: 430px !important;
+    height: 430px !important;
+    right: -190px !important;
+    top: 42px !important;
+    opacity: 0.92 !important;
   }
 
-  /* 如果红色圆环是单独的 .ring 元素 */
-  .ring,
-  .thin {
-    display: block !important;
-    position: absolute !important;
-    z-index: 0 !important;
-    pointer-events: none !important;
-  }
-
-  /* 让文字、标签、按钮全部压在装饰上面 */
-  .card > *,
-  .tile > *,
-  .large > *,
-  .accent > * {
+  .band > * {
     position: relative !important;
     z-index: 2 !important;
   }
 
-  .card h1,
-  .card h2,
-  .card h3,
-  .card p,
-  .card .kicker,
-  .card .num,
-  .card .tags,
-  .tile h1,
-  .tile h2,
-  .tile h3,
-  .tile p,
-  .tile .kicker,
-  .tile .num,
-  .tile .tags,
-  .large h1,
-  .large h2,
-  .large h3,
-  .large p,
-  .large .kicker,
-  .large .num,
-  .large .tags,
-  .accent h1,
-  .accent h2,
-  .accent h3,
-  .accent p,
-  .accent .kicker,
-  .accent .num,
-  .accent .tags {
+  .band .label,
+  .band .kicker,
+  .band h1,
+  .band h2,
+  .band h3,
+  .band p {
     position: relative !important;
     z-index: 3 !important;
+  }
+
+  .band h2 {
+    font-size: clamp(30px, 9vw, 40px) !important;
+    line-height: 1.06 !important;
+    letter-spacing: -0.045em !important;
+  }
+
+  .band p {
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  /* 防止旧的 .ring / .thin 在手机端被重新唤醒 */
+  .hero .ring,
+  .hero .thin,
+  .visual .ring,
+  .visual .thin {
+    display: none !important;
   }
 }
